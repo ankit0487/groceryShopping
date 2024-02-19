@@ -1,0 +1,99 @@
+API to return list of available shops with their metadata
+API to return the menu and items availability of a particular shop
+Add to cart option for a user, from a single shop
+Allow users to place orders.
+Delivery person assignment (based on distance)
+Show orders history to users
+
+
+shop has a menu
+
+Classes:
+    - shop
+        - id
+        - metadata: {}
+        - name
+        - menu  (foreign key)
+        - inventory (foreign key)
+        - address (foreign key)
+
+    - menu
+        - items
+        - shop (foreign key)
+
+    - item
+        - name
+        - mrp_price
+        - item_price (one to many)
+
+    - item_price
+        - shop  (foreign key)
+        - item
+        - selling_price
+
+    - inventory
+        - item  (foreign key)
+        - count
+        - shop  (foreign key)
+        - item_price
+
+    - person
+        - role: (customer, delivery_person)
+        - name
+        - email
+        - cart (foreign key)
+
+     customer
+        - add to cart
+        - get order history
+
+     delivery_person
+        - deliver_bag(order)
+        - pickup_order
+
+
+    - order
+        - customer  (foreign key)
+        - line_items
+        - address   (foreign key)
+        - status
+
+    - Order_Status
+        - created
+        - completed
+        - failed
+        - rejected
+
+order
+placed, delivery partner assigned, picked up, delivered
+
+add_to_cart -> tries to make payment -> payment complete
+                order (created)         order(completed)
+                                      -> failed
+                                        order(failed)
+
+    - delivery
+        - delivery_person
+        - order
+        - status
+
+    - line_item
+        - item
+        - quantity
+        - shop
+        - source_type (order / cart)
+        - source_id (foreign key)
+
+    - address
+        - address_line1
+        - area_name
+        - pincode
+        - city
+        - state
+        - latitude
+        - longitute
+
+    - cart
+        - customer  (foreign key)
+        - line_items
+
